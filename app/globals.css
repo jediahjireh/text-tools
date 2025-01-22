@@ -70,3 +70,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.comic-sans-ms {
+  font-family: "Comic Sans MS", cursive;
+}
