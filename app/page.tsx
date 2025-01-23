@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import TextArea from "@/components/tools/TextArea";
+import CharacterCounter from "@/components/tools/CharacterCounter";
 
 export default function Home() {
   const [text, setText] = useState("");
@@ -12,6 +13,9 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-pink-500 text-center comic-sans-ms">
           Text Tools
         </h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <CharacterCounter text={text} />
+        </div>
         <TextArea text={text} setText={setText} />
       </div>
     </div>
