@@ -12,23 +12,28 @@ interface TextWrapperProps {
 export default function TextWrapper({ text, setText }: TextWrapperProps) {
   const [wrapLength, setWrapLength] = useState(20);
 
-  // word-based text wrapping logic
+  // word-based text wrapping logic with respect for existing line breaks
   const wrapText = () => {
-    const words = text.split(/\s+/);
-    let wrappedText = "";
-    let currentLine = "";
+    const lines = text.split("\n");
+    const wrappedLines = lines.map((line) => {
+      const words = line.split(/\s+/);
+      let wrappedLine = "";
+      let currentLine = "";
 
-    for (const word of words) {
-      if ((currentLine + word).length > wrapLength) {
-        wrappedText += (wrappedText ? "\n" : "") + currentLine.trim();
-        currentLine = word + " ";
-      } else {
-        currentLine += word + " ";
+      for (const word of words) {
+        if ((currentLine + word).length > wrapLength) {
+          wrappedLine += (wrappedLine ? "\n" : "") + currentLine.trim();
+          currentLine = word + " ";
+        } else {
+          currentLine += word + " ";
+        }
       }
-    }
 
-    wrappedText += (wrappedText ? "\n" : "") + currentLine.trim();
-    setText(wrappedText);
+      wrappedLine += (wrappedLine ? "\n" : "") + currentLine.trim();
+      return wrappedLine;
+    });
+
+    setText(wrappedLines.join("\n"));
   };
 
   return (
