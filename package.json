@@ -1,6 +1,12 @@
 {
   "name": "text-tools",
   "version": "0.1.0",
+  "description": "A cutesy text manipulation application built with Next.js and React.",
+  "author": {
+    "name": "Jediah Jireh Naicker",
+    "email": "jediahnaicker@gmail.com",
+    "url": "https://www.jediah.dev"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -30,5 +36,23 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jediahjireh/text-tools.git"
+  },
+  "keywords": [
+    "text tools",
+    "text manipulation",
+    "next.js",
+    "react",
+    "tailwind"
+  ],
+  "homepage": "",
+  "bugs": {
+    "url": "https://github.com/jediahjireh/text-tools/issues"
+  },
+  "social": {
+    "github": "https://github.com/jediahjireh"
   }
 }
