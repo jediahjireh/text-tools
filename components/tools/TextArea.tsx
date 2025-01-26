@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Undo2, Redo2, Copy, CopyCheck } from "lucide-react";
+import { Undo2, Redo2, Copy, CopyCheck, X } from "lucide-react";
 
 interface TextAreaProps {
   text: string;
@@ -52,25 +52,46 @@ export default function TextArea({ text, setText }: TextAreaProps) {
     }
   };
 
+  const handleClear = () => {
+    // add the current text to the history if it's not already the latest
+    if (text !== history[historyIndex]) {
+      setHistory((prev) => [...prev.slice(0, historyIndex + 1), text]);
+      setHistoryIndex((prev) => prev + 1);
+    }
+    // clear the text within the text area
+    setText("");
+  };
+
   return (
     <div className="space-y-2">
-      <div className="flex justify-end">
-        <Button
-          onClick={handleUndo}
-          variant={"link"}
-          disabled={historyIndex <= 0}
-          className="text-pink-500 hover:text-pink-700 disabled:opacity-50"
-        >
-          <Undo2 className="w-4 h-4" />
-        </Button>
-        <Button
-          onClick={handleRedo}
-          variant={"link"}
-          disabled={historyIndex >= history.length - 1}
-          className="text-pink-500 hover:text-pink-700 disabled:opacity-50"
-        >
-          <Redo2 className="w-4 h-4" />
-        </Button>
+      <div className="flex justify-between">
+        <div>
+          <Button
+            onClick={handleUndo}
+            variant={"link"}
+            disabled={historyIndex <= 0}
+            className="text-pink-500 hover:text-pink-700 disabled:opacity-50"
+          >
+            <Undo2 className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={handleRedo}
+            variant={"link"}
+            disabled={historyIndex >= history.length - 1}
+            className="text-pink-500 hover:text-pink-700 disabled:opacity-50"
+          >
+            <Redo2 className="w-4 h-4" />
+          </Button>
+        </div>
+        <div>
+          <Button
+            onClick={handleClear}
+            variant={"link"}
+            className="text-pink-500 hover:text-pink-700"
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
       <textarea
         ref={textareaRef}
