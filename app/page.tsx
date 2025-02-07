@@ -5,6 +5,7 @@ import TextArea from "@/components/tools/TextArea";
 import CharacterCounter from "@/components/tools/CharacterCounter";
 import EmojiRemover from "@/components/tools/EmojiRemover";
 import TextWrapper from "@/components/tools/TextWrapper";
+import WordCounter from "@/components/tools/WordCounter";
 
 export default function Home() {
   const [text, setText] = useState("");
@@ -14,6 +15,7 @@ export default function Home() {
       <div className="max-w-2xl w-full bg-white rounded-lg shadow-lg p-6 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <CharacterCounter text={text} />
+          <WordCounter text={text} />
         </div>
         <h1 className="text-3xl font-bold text-pink-500 text-center comic-sans-ms">
           Text Tools
