@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import AnalysisTools from "@/components/tools/AnalysisTools";
+import StructuralTools from "@/components/tools/StructuralTools";
 import TextArea from "@/components/tools/TextArea";
 import { ThemeToggle } from "@/components/tools/ThemeToggle";
 import { Card, CardContent } from "@/components/ui/card";
@@ -31,6 +32,12 @@ export default function Home() {
           <div className="relative w-full overflow-auto">
             <TabsList className="scrollbar-hidden mb-4 flex w-full justify-between overflow-x-auto pb-1">
               <TabsTrigger
+                value="structural"
+                className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+              >
+                Structure
+              </TabsTrigger>
+              <TabsTrigger
                 value="analysis"
                 className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
               >
@@ -40,6 +47,9 @@ export default function Home() {
           </div>
           <Card>
             <CardContent className="p-4 sm:p-6">
+              <TabsContent value="structural">
+                <StructuralTools text={text} setText={setText} />
+              </TabsContent>
               <TabsContent value="analysis">
                 <AnalysisTools text={text} />
               </TabsContent>
