@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import AnalysisTools from "@/components/tools/AnalysisTools";
+import CaseAndStyleTools from "@/components/tools/CaseAndStyleTools";
 import StructuralTools from "@/components/tools/StructuralTools";
 import TextArea from "@/components/tools/TextArea";
 import { ThemeToggle } from "@/components/tools/ThemeToggle";
@@ -38,6 +39,12 @@ export default function Home() {
                 Structure
               </TabsTrigger>
               <TabsTrigger
+                value="case-style"
+                className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+              >
+                Case
+              </TabsTrigger>
+              <TabsTrigger
                 value="analysis"
                 className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
               >
@@ -49,6 +56,9 @@ export default function Home() {
             <CardContent className="p-4 sm:p-6">
               <TabsContent value="structural">
                 <StructuralTools text={text} setText={setText} />
+              </TabsContent>
+              <TabsContent value="case-style">
+                <CaseAndStyleTools text={text} setText={setText} />
               </TabsContent>
               <TabsContent value="analysis">
                 <AnalysisTools text={text} />
