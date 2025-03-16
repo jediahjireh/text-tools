@@ -113,12 +113,12 @@ application provides a variety of text tools wrapped in an adorable interface.
 
 ### Structural Tools
 
-- **Text Wrapper**: Enter the desired line length and select the wrapping mode
-  (word-based or strict).
+- **Text Wrapper**: Enter the desired line length (character count) and select
+  the wrapping mode (word-based or strict).
+- **Paragraph Wrapper**: Enter the desired line count and click "Wrap".
 - **Indentation Adjuster**: Specify the number of spaces for indentation and
-  click "Adjust Indentation".
-- **List Formatter**: Choose between bullet or numbered list and click "Format
-  List".
+  click "Adjust".
+- **List Formatter**: Choose between bullet or numbered list and click "Format".
 
 ### Case and Style Tools
 
