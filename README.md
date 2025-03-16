@@ -2,7 +2,8 @@
 
 ![Text Tools Logo](/placeholder.svg)
 
-A cutesy text manipulation application built with Next.js and React. This application provides a variety of text tools wrapped in an adorable interface.
+A cutesy text manipulation application built with Next.js and React. This
+application provides a variety of text tools wrapped in an adorable interface.
 
 ## Table of Contents
 
@@ -28,15 +29,20 @@ A cutesy text manipulation application built with Next.js and React. This applic
 
 ## Features
 
-1. **Main Text Area**: A central area for text input with copy, undo and redo functionality.
+1. **Main Text Area**: A central area for text input with copy, undo and redo
+   functionality.
 2. **Structural Tools**:
-   - Text Wrapper: Wrap text based on character count with word-based or strict options.
+   - Text Wrapper: Wrap text based on character count with word-based or strict
+     options.
    - Indentation Adjuster: Add or remove leading spaces.
-   - Bullet/Numbered List Formatter: Convert plain text into ordered or unordered lists.
+   - Bullet/Numbered List Formatter: Convert plain text into ordered or
+     unordered lists.
 3. **Case and Style Tools**:
-   - Case Converter: Convert text between lowercase, uppercase, title case and sentence case.
+   - Case Converter: Convert text between lowercase, uppercase, title case and
+     sentence case.
    - Text Normaliser: Remove extra spaces and trim whitespace.
-   - CamelCase/Underscore Converter: Convert text to camelCase, snake_case or kebab-case.
+   - CamelCase/Underscore Converter: Convert text to camelCase, snake_case or
+     kebab-case.
 4. **Cleaning Tools**:
    - Emoji/Unicode Remover: Strip emojis or non-ASCII characters from text.
    - Punctuation Remover: Remove punctuation marks.
@@ -52,7 +58,8 @@ A cutesy text manipulation application built with Next.js and React. This applic
    - Base64 Encoder/Decoder: Convert text to and from Base64 format.
    - Find and Replace: Locate and replace specific patterns in text.
 7. **Language Tools**:
-   - Transliteration Tool: Convert text between different scripts (e.g. Cyrillic to Latin).
+   - Transliteration Tool: Convert text between different scripts (e.g. Cyrillic
+     to Latin).
    - Text Tokeniser: Break text into smaller units.
    - Language Detector: Identify the language of the given text.
 8. **Analysis Tools**:
@@ -93,7 +100,8 @@ A cutesy text manipulation application built with Next.js and React. This applic
    npm run dev
    ```
 
-5. Open the [default localhost](http://localhost:3000) in your browser to see the application.
+5. Open the [default localhost](http://localhost:3000) in your browser to see
+   the application.
 
 ## Usage
 
@@ -105,37 +113,50 @@ A cutesy text manipulation application built with Next.js and React. This applic
 
 ### Structural Tools
 
-- **Text Wrapper**: Enter the desired line length and select the wrapping mode (word-based or strict).
-- **Indentation Adjuster**: Specify the number of spaces for indentation and click "Adjust Indentation".
-- **List Formatter**: Choose between bullet or numbered list and click "Format List".
+- **Text Wrapper**: Enter the desired line length and select the wrapping mode
+  (word-based or strict).
+- **Indentation Adjuster**: Specify the number of spaces for indentation and
+  click "Adjust Indentation".
+- **List Formatter**: Choose between bullet or numbered list and click "Format
+  List".
 
 ### Case and Style Tools
 
 - **Case Converter**: Select the desired case type and click "Convert Case".
-- **Style Converter**: Choose the style (camelCase, snake_case, kebab-case) and click "Convert Style".
-- **Text Normaliser**: Click "Normalise Text" to remove extra spaces and trim whitespace.
+- **Style Converter**: Choose the style (camelCase, snake_case, kebab-case) and
+  click "Convert Style".
+- **Text Normaliser**: Click "Normalise Text" to remove extra spaces and trim
+  whitespace.
 
 ### Cleaning Tools
 
-- Use the respective buttons to remove emojis, punctuation, stop words, HTML tags or filter profanity.
+- Use the respective buttons to remove emojis, punctuation, stop words, HTML
+  tags or filter profanity.
 
 ### Formatting Tools
 
-- **Text Justifier**: Choose the alignment (left, right, center) and click "Justify Text".
-- **Whitespace Adjuster**: Click "Adjust Whitespace" to normalise spaces and tabs.
-- **Markdown Converter**: Click "Convert to Markdown" to format text as Markdown.
+- **Text Justifier**: Choose the alignment (left, right, center) and click
+  "Justify Text".
+- **Whitespace Adjuster**: Click "Adjust Whitespace" to normalise spaces and
+  tabs.
+- **Markdown Converter**: Click "Convert to Markdown" to format text as
+  Markdown.
 
 ### Transformation Tools
 
 - **Text Reverser**: Click "Reverse Text" to reverse the characters in the text.
 - **Base64 Encoder/Decoder**: Use "Encode Base64" or "Decode Base64" as needed.
-- **Find and Replace**: Enter the text to find and its replacement, then click "Find and Replace".
+- **Find and Replace**: Enter the text to find and its replacement, then click
+  "Find and Replace".
 
 ### Language Tools
 
-- **Transliterator**: Click "Transliterate" to convert between scripts (currently Cyrillic to Latin).
-- **Text Tokeniser**: Click "Tokenise Text" to break the text into individual words.
-- **Language Detector**: Click "Detect Language" to identify the probable language of the text.
+- **Transliterator**: Click "Transliterate" to convert between scripts
+  (currently Cyrillic to Latin).
+- **Text Tokeniser**: Click "Tokenise Text" to break the text into individual
+  words.
+- **Language Detector**: Click "Detect Language" to identify the probable
+  language of the text.
 
 ### Analysis Tools
 
@@ -173,9 +194,12 @@ text-tools/
 
 To customise the appearance:
 
-1. Modify the CSS classes in the component files. The project uses Tailwind CSS for styling.
-2. To change the color scheme, update the `tailwind.config.js` file and modify the color classes in the components.
-3. To add new features, create new components in the `app/components` directory and import them in `app/page.tsx`.
+1. Modify the CSS classes in the component files. The project uses Tailwind CSS
+   for styling.
+2. To change the color scheme, update the `tailwind.config.js` file and modify
+   the color classes in the components.
+3. To add new features, create new components in the `app/components` directory
+   and import them in `app/page.tsx`.
 
 ## Contributing
 
@@ -187,7 +211,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/new-feature`)
 5. Open a Pull Request
 
-Please ensure your code follows the existing style and includes appropriate tests.
+Please ensure your code follows the existing style and includes appropriate
+tests.
 
 ## Documentation To Reference
 

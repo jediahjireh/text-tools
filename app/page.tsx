@@ -1,30 +1,51 @@
 "use client";
 
 import { useState } from "react";
+
+import AnalysisTools from "@/components/tools/AnalysisTools";
 import TextArea from "@/components/tools/TextArea";
-import CharacterCounter from "@/components/tools/CharacterCounter";
-import EmojiRemover from "@/components/tools/EmojiRemover";
-import TextWrapper from "@/components/tools/TextWrapper";
-import WordCounter from "@/components/tools/WordCounter";
+import { ThemeToggle } from "@/components/tools/ThemeToggle";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   const [text, setText] = useState("");
 
   return (
-    <div className="min-h-screen bg-pink-100 flex flex-col items-center justify-center p-4 relative">
-      <div className="max-w-2xl w-full bg-white rounded-lg shadow-lg p-6 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <CharacterCounter text={text} />
-          <WordCounter text={text} />
-        </div>
-        <h1 className="text-3xl font-bold text-pink-500 text-center comic-sans-ms">
-          Text Tools
-        </h1>
-        <TextArea text={text} setText={setText} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <EmojiRemover text={text} setText={setText} />
-          <TextWrapper text={text} setText={setText} />
-        </div>
+    <div className="flex min-h-screen flex-col items-center bg-background p-4 sm:p-6 md:p-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <header className="mb-6 flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-primary sm:text-3xl">
+            Text Tools
+          </h1>
+          <ThemeToggle />
+        </header>
+
+        <Card className="mb-6">
+          <CardContent className="p-4 sm:p-6">
+            <TextArea text={text} setText={setText} />
+          </CardContent>
+        </Card>
+
+        <Tabs defaultValue="structural" className="w-full">
+          <div className="relative w-full overflow-auto">
+            <TabsList className="scrollbar-hidden mb-4 flex w-full justify-between overflow-x-auto pb-1">
+              <TabsTrigger
+                value="analysis"
+                className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+              >
+                Stats
+              </TabsTrigger>
+            </TabsList>
+          </div>
+          <Card>
+            <CardContent className="p-4 sm:p-6">
+              <TabsContent value="analysis">
+                <AnalysisTools text={text} />
+              </TabsContent>
+            </CardContent>
+          </Card>
+        </Tabs>
       </div>
     </div>
   );
