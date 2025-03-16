@@ -160,7 +160,8 @@ application provides a variety of text tools wrapped in an adorable interface.
 
 ### Analysis Tools
 
-- View the character count, word count and line count of your text.
+- View the character, word, paragraph and line counts of your text, as well as
+  its average read time.
 
 ## Project Structure
 
