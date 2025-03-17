@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import AnalysisTools from "@/components/tools/AnalysisTools";
 import CaseAndStyleTools from "@/components/tools/CaseAndStyleTools";
+import CleaningTools from "@/components/tools/CleaningTools";
 import StructuralTools from "@/components/tools/StructuralTools";
 import TextArea from "@/components/tools/TextArea";
 import { ThemeToggle } from "@/components/tools/ThemeToggle";
@@ -45,6 +46,12 @@ export default function Home() {
                 Case
               </TabsTrigger>
               <TabsTrigger
+                value="cleaning"
+                className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+              >
+                Clean
+              </TabsTrigger>
+              <TabsTrigger
                 value="analysis"
                 className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
               >
@@ -59,6 +66,9 @@ export default function Home() {
               </TabsContent>
               <TabsContent value="case-style">
                 <CaseAndStyleTools text={text} setText={setText} />
+              </TabsContent>
+              <TabsContent value="cleaning">
+                <CleaningTools text={text} setText={setText} />
               </TabsContent>
               <TabsContent value="analysis">
                 <AnalysisTools text={text} />
