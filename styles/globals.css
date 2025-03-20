@@ -89,3 +89,202 @@
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--primary));
 }
+
+/* improve touch scrolling */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* visual indicator for scrollable tabs */
+@media (max-width: 768px) {
+  .overflow-x-auto::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 24px;
+    background: linear-gradient(to right, transparent, hsl(var(--background)));
+    pointer-events: none;
+  }
+}
+
+/* make tabs more touch-friendly */
+.TabsTrigger {
+  min-height: 40px;
+  min-width: 40px;
+  touch-action: manipulation;
+}
+
+[data-state="active"].TabsTrigger {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* improve tab appearance on mobile */
+@media (max-width: 640px) {
+  [role="tablist"] {
+    gap: 4px;
+  }
+
+  [role="tab"] {
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+/* full-width tabs with even distribution */
+[role="tablist"] {
+  display: flex;
+  width: 100%;
+}
+
+[role="tab"] {
+  flex: 1 1 0;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* ensure tabs are evenly distributed but can still scroll */
+.TabsList {
+  display: flex;
+  width: 100%;
+}
+
+/* rich text editor styles */
+.checklist {
+  list-style-type: none;
+  padding-left: 1.5em;
+}
+
+.checklist li {
+  list-style-type: none;
+  position: relative;
+  margin-bottom: 0.5em;
+}
+
+.checklist li input[type="checkbox"] {
+  margin-right: 0.5em;
+}
+
+blockquote {
+  border-left: 3px solid hsl(var(--primary));
+  padding-left: 1em;
+  margin-left: 0;
+  color: hsl(var(--muted-foreground));
+}
+
+/* code block styles */
+[contenteditable] pre {
+  background-color: hsl(var(--muted));
+  padding: 1em;
+  border-radius: 0.25em;
+  overflow-x: auto;
+  font-family: monospace;
+  white-space: pre-wrap;
+  margin: 1em 0;
+}
+
+/* table styles */
+[contenteditable] table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+[contenteditable] table th,
+[contenteditable] table td {
+  border: 1px solid hsl(var(--border));
+  padding: 0.5em;
+}
+
+[contenteditable] table th {
+  background-color: hsl(var(--muted));
+  font-weight: bold;
+}
+
+/* heading styles */
+[contenteditable] h1 {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin: 0.67em 0;
+}
+
+[contenteditable] h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0.83em 0;
+}
+
+[contenteditable] h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+  margin: 1em 0;
+}
+
+/* list styles */
+[contenteditable] ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin: 1em 0;
+}
+
+[contenteditable] ol {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+  margin: 1em 0;
+}
+
+[contenteditable] li {
+  margin-bottom: 0.5em;
+}
+
+/* image and figure styles */
+[contenteditable] figure {
+  text-align: center;
+  margin: 1em 0;
+}
+
+[contenteditable] figcaption {
+  font-size: 0.9em;
+  color: hsl(var(--muted-foreground));
+  margin-top: 0.5em;
+}
+
+[contenteditable] img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* link previews, images and tables */
+[contenteditable] .link-container {
+  margin: 0.5em 0;
+}
+
+[contenteditable] .link-preview {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  border: 1px solid hsl(var(--border));
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 4px;
+  background-color: hsl(var(--muted));
+}
+
+[contenteditable] .image-container {
+  text-align: center;
+  margin: 1em 0;
+}
+
+[contenteditable] .image-source {
+  font-size: 0.8em;
+  color: hsl(var(--muted-foreground));
+  margin-top: 0.2em;
+}
+
+[contenteditable] .table-container {
+  margin: 1em 0;
+  overflow-x: auto;
+}

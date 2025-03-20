@@ -5,14 +5,22 @@ import { useState } from "react";
 import AnalysisTools from "@/components/tools/AnalysisTools";
 import CaseAndStyleTools from "@/components/tools/CaseAndStyleTools";
 import CleaningTools from "@/components/tools/CleaningTools";
+import FormattingTools from "@/components/tools/FormattingTools";
+import LanguageTools from "@/components/tools/LanguageTools";
+import RichTextEditor from "@/components/tools/RichTextEditor";
 import StructuralTools from "@/components/tools/StructuralTools";
 import TextArea from "@/components/tools/TextArea";
 import { ThemeToggle } from "@/components/tools/ThemeToggle";
+import TransformationTools from "@/components/tools/TransformationTools";
 import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   const [text, setText] = useState("");
+  const [html, setHtml] = useState("");
+  const [useRichEditor, setUseRichEditor] = useState(false);
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-background p-4 sm:p-6 md:p-8">
@@ -26,36 +34,81 @@ export default function Home() {
 
         <Card className="mb-6">
           <CardContent className="p-4 sm:p-6">
-            <TextArea text={text} setText={setText} />
+            <div className="mb-4 flex justify-end">
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="editor-mode"
+                  checked={useRichEditor}
+                  onCheckedChange={setUseRichEditor}
+                />
+                <Label htmlFor="editor-mode">Rich Text Editor</Label>
+              </div>
+            </div>
+
+            {useRichEditor ? (
+              <RichTextEditor
+                text={text}
+                setText={setText}
+                html={html}
+                setHtml={setHtml}
+              />
+            ) : (
+              <TextArea text={text} setText={setText} />
+            )}
           </CardContent>
         </Card>
 
         <Tabs defaultValue="structural" className="w-full">
           <div className="relative w-full overflow-auto">
-            <TabsList className="scrollbar-hidden mb-4 flex w-full justify-between overflow-x-auto pb-1">
+            <TabsList className="mb-4 inline-flex h-auto w-full flex-nowrap overflow-x-auto pb-1">
               <TabsTrigger
                 value="structural"
-                className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+                className="min-w-[80px] flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
               >
-                Structure
+                <span className="hidden md:inline">Structural</span>
+                <span className="md:hidden">Structure</span>
               </TabsTrigger>
               <TabsTrigger
                 value="case-style"
-                className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+                className="min-w-[80px] flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
               >
-                Case
+                <span className="hidden md:inline">Case & Style</span>
+                <span className="md:hidden">Case</span>
               </TabsTrigger>
               <TabsTrigger
                 value="cleaning"
-                className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+                className="min-w-[80px] flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
               >
-                Clean
+                <span className="hidden md:inline">Cleaning</span>
+                <span className="md:hidden">Clean</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="formatting"
+                className="min-w-[80px] flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+              >
+                <span className="hidden md:inline">Formatting</span>
+                <span className="md:hidden">Format</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="transformation"
+                className="min-w-[80px] flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+              >
+                <span className="hidden md:inline">Transform</span>
+                <span className="md:hidden">Trans</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="language"
+                className="min-w-[80px] flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+              >
+                <span className="hidden md:inline">Language</span>
+                <span className="md:hidden">Lang</span>
               </TabsTrigger>
               <TabsTrigger
                 value="analysis"
-                className="flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
+                className="min-w-[80px] flex-1 whitespace-nowrap px-2 py-1.5 text-xs sm:text-sm"
               >
-                Stats
+                <span className="hidden md:inline">Analysis</span>
+                <span className="md:hidden">Stats</span>
               </TabsTrigger>
             </TabsList>
           </div>
@@ -69,6 +122,15 @@ export default function Home() {
               </TabsContent>
               <TabsContent value="cleaning">
                 <CleaningTools text={text} setText={setText} />
+              </TabsContent>
+              <TabsContent value="formatting">
+                <FormattingTools text={text} setText={setText} />
+              </TabsContent>
+              <TabsContent value="transformation">
+                <TransformationTools text={text} setText={setText} />
+              </TabsContent>
+              <TabsContent value="language">
+                <LanguageTools text={text} setText={setText} />
               </TabsContent>
               <TabsContent value="analysis">
                 <AnalysisTools text={text} />
