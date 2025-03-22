@@ -13,13 +13,13 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
   ({ value, onChange, onSelectionChange }, ref) => {
     const editorRef = useRef<HTMLDivElement>(null);
 
-    // Forward the ref to the parent component
+    // forward the ref to the parent component
     useImperativeHandle(ref, () => editorRef.current!);
 
-    // Update the editor content when the value prop changes
+    // update the editor content when the value prop changes
     useEffect(() => {
       if (editorRef.current && editorRef.current.innerHTML !== value) {
-        // Save selection
+        // save selection
         const selection = window.getSelection();
         let range = null;
         const hadFocus = document.activeElement === editorRef.current;
@@ -32,17 +32,17 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
           range = selection.getRangeAt(0).cloneRange();
         }
 
-        // Update content
+        // update content
         editorRef.current.innerHTML = value;
 
-        // Restore selection if possible
+        // restore selection if possible
         if (hadFocus && range && selection) {
           try {
-            // Try to adjust the range to the new DOM
+            // try to adjust the range to the new DOM
             const newRange = document.createRange();
 
-            // Find equivalent positions in the new DOM
-            // This is a simplified approach and might not work perfectly in all cases
+            // find equivalent positions in the new DOM
+            // (this is a simplified approach and might not work perfectly in all cases)
             if (editorRef.current.contains(range.startContainer)) {
               newRange.setStart(range.startContainer, range.startOffset);
               newRange.setEnd(range.endContainer, range.endOffset);
@@ -50,7 +50,7 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
               selection.removeAllRanges();
               selection.addRange(newRange);
 
-              // Focus the editor
+              // focus the editor
               editorRef.current.focus();
             }
           } catch (e) {
@@ -60,7 +60,7 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
       }
     }, [value]);
 
-    // Handle selection changes
+    // handle selection changes
     useEffect(() => {
       if (!onSelectionChange) return;
 
@@ -81,34 +81,48 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
       };
     }, [onSelectionChange]);
 
-    // Handle input events
+    // handle input events
     const handleInput = () => {
       if (editorRef.current) {
         onChange(editorRef.current.innerHTML);
       }
     };
 
-    // Handle paste events to clean up pasted content
+    // handle paste events to clean up pasted content and preserve whitespace
     const handlePaste = (e: React.ClipboardEvent) => {
       e.preventDefault();
 
-      // Get text content from clipboard
+      // get text content from clipboard
       const text = e.clipboardData.getData("text/plain");
 
-      // Check if HTML content is available
+      // check if HTML content is available
       const html = e.clipboardData.getData("text/html");
 
       if (html && (html.includes("<table") || html.includes("<img"))) {
-        // For tables and images, we'll use a sanitized version of the HTML
+        // for tables and images, we'll use a sanitized version of the HTML
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = html;
 
-        // Remove potentially harmful elements and attributes
+        // remove potentially harmful elements and attributes
         const sanitizedHtml = tempDiv.innerHTML;
         document.execCommand("insertHTML", false, sanitizedHtml);
       } else {
-        // For plain text, just insert as text
-        document.execCommand("insertText", false, text);
+        // preserve whitespace and line breaks for plain text
+        const formattedText = text
+          .replace(/\n/g, "<br>")
+          .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
+          .replace(/ {2}/g, "&nbsp;&nbsp;");
+
+        document.execCommand("insertHTML", false, formattedText);
+      }
+    };
+
+    // handle keydown events to properly handle tabs
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      // handle tab key to insert spaces instead of changing focus
+      if (e.key === "Tab") {
+        e.preventDefault();
+        document.execCommand("insertHTML", false, "&nbsp;&nbsp;&nbsp;&nbsp;");
       }
     };
 
@@ -116,14 +130,17 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
       <div
         ref={editorRef}
         contentEditable="true"
-        className="min-h-[200px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+        className="min-h-[200px] w-full whitespace-pre-wrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
         onInput={handleInput}
         onPaste={handlePaste}
+        onKeyDown={handleKeyDown}
         style={{ overflowY: "auto" }}
         suppressContentEditableWarning={true}
         spellCheck="true"
-        data-gramm="false" // Disable Grammarly which can interfere
-        dir="ltr" // Ensure left-to-right text direction
+        // disable Grammarly which can interfere
+        data-gramm="false"
+        // ensure left-to-right text direction
+        dir="ltr"
       />
     );
   },

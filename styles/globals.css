@@ -273,6 +273,22 @@ blockquote {
   background-color: hsl(var(--muted));
 }
 
+[contenteditable] .link-url {
+  font-size: 0.9em;
+  color: hsl(var(--primary));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[contenteditable] .link-description {
+  font-size: 0.8em;
+  color: hsl(var(--muted-foreground));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 [contenteditable] .image-container {
   text-align: center;
   margin: 1em 0;
@@ -287,4 +303,9 @@ blockquote {
 [contenteditable] .table-container {
   margin: 1em 0;
   overflow-x: auto;
+}
+
+/* preserve whitespace in editor */
+[contenteditable].whitespace-pre-wrap {
+  white-space: pre-wrap;
 }

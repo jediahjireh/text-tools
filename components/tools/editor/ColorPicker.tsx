@@ -17,7 +17,7 @@ export default function ColorPicker({
   const [activeTab, setActiveTab] = useState("text");
 
   const colors = [
-    // Basic colors
+    // basic colors
     "#000000",
     "#434343",
     "#666666",
@@ -39,7 +39,7 @@ export default function ColorPicker({
     "#0000ff",
     "#9900ff",
     "#ff00ff",
-    // More colors
+    // more colors
     "#e6b8af",
     "#f4cccc",
     "#fce5cd",

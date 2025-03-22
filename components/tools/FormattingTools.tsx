@@ -46,7 +46,8 @@ export default function FormattingTools({
         case "left":
           return line.trimStart();
         case "right":
-          return line.padStart(80); // Assuming 80 characters width
+          // assuming 80 characters width
+          return line.padStart(80);
         case "center":
           return line
             .trim()
@@ -64,83 +65,69 @@ export default function FormattingTools({
   };
 
   const convertToMarkdown = () => {
-    // This is commented out as per user request, but UI is preserved
+    // markdown conversion
+    const markdown = text
+      // headers
+      .replace(/^# (.+)$/gm, "# $1")
+      .replace(/^## (.+)$/gm, "## $1")
+      .replace(/^### (.+)$/gm, "### $1")
+      // formatting
+      .replace(/\*\*(.+?)\*\*/g, "**$1**") // bold
+      .replace(/\*(.+?)\*/g, "*$1*") // italic
+      .replace(/_(.+?)_/g, "_$1_") // underline/italic
+      .replace(/~~(.+?)~~/g, "~~$1~~") // strikethrough
+      // lists
+      .replace(/^(\d+)\. (.+)$/gm, "$1. $2") // numbered lists
+      .replace(/^- (.+)$/gm, "- $1") // bullet lists
+      // links and images
+      .replace(/\[(.+?)\]$$(.+?)$$/g, "[$1]($2)") // links
+      .replace(/!\[(.+?)\]$$(.+?)$$/g, "![$1]($2)") // images
+      // code
+      .replace(/`(.+?)`/g, "`$1`") // inline code
+      .replace(/```([\s\S]+?)```/g, "```$1```"); // code blocks
 
-    // Enhanced markdown conversion
-    // const markdown = text
-    //   // Headers
-    //   .replace(/^# (.+)$/gm, "# $1")
-    //   .replace(/^## (.+)$/gm, "## $1")
-    //   .replace(/^### (.+)$/gm, "### $1")
-    //   // Formatting\
-    //   .replace(/\*\*(.+?)\*\*/ g,
-    //   "**$1**\") // bold
-    //   .replace(/\*(.+?)\*/g, "*$1*") // italic
-    //     .replace(/_(.+?)_/g, "_$1_") // underline/italic
-    //     .replace(/~~(.+?)~~/g, "~~$1~~") // strikethrough
-    //     // Lists
-    //     .replace(/^(\d+)\. (.+)$/gm, "$1. $2") // numbered lists
-    //     .replace(/^- (.+)$/gm, "- $1") // bullet lists
-    //     // Links and images
-    //     .replace(/\[(.+?)\]$$(.+?)$$/g, "[$1]($2)") // links
-    //     .replace(/!\[(.+?)\]$$(.+?)$$/g, "![$1]($2)") // images
-    //     // Code
-    //     .replace(/`(.+?)`/g, "`$1`") // inline code
-    //     .replace(/```([\s\S]+?)```/g, "```$1```") // code blocks
-
-    // setText(markdown)
-
-    // Just set preview content for now
-    setPreviewContent(text);
+    setPreviewContent(markdown);
     setPreviewType("markdown");
   };
 
   const convertToHTML = () => {
-    // This is commented out as per user request, but UI is preserved
-
     // Convert text to HTML
-    // const html = text
-    //   // Headers
-    //   .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-    //   .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-    //   .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-    //   // Formatting
-    //   .replace(/\*\*(.+?)\*\*/ g, "<strong>$1</strong>"
-    // ) // bold
-    //   .replace(/\*(.+?)\*/g, "<em>$1</em>") // italic
-    //   .replace(/_(.+?)_/g, "<em>$1</em>") // underline/italic
-    //   .replace(/~~(.+?)~~/g, "<del>$1</del>") // strikethrough
-    //   // Lists
-    //   .replace(/^(\d+)\. (.+)$/gm, "<li>$2</li>") // numbered lists
-    //   .replace(/^- (.+)$/gm, "<li>$1</li>") // bullet lists
-    //   // Links and images
-    //   .replace(/\[(.+?)\]$$(.+?)$$/g, '<a href="$2">$1</a>') // links
-    //   .replace(/!\[(.+?)\]$$(.+?)$$/g, '<img src="$2" alt="$1">') // images
-    //   // Code
-    //   .replace(/`(.+?)`/g, "<code>$1</code>") // inline code
-    //   .replace(/\`\`\`([\s\S]+?)\`\`\`/g, "<pre><code>$1</code></pre>") // code blocks
-    //   // Paragraphs
-    //   .replace(/\n\n/g, "</p><p>")
-    //   // Line breaks
-    //   .replace(/\n/g, "<br>")
+    const html = text
+      // headers
+      .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+      .replace(/^## (.+)$/gm, "<h2>$1</h2>")
+      .replace(/^### (.+)$/gm, "<h3>$1</h3>")
+      // formatting
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") // bold
+      .replace(/\*(.+?)\*/g, "<em>$1</em>") // italic
+      .replace(/_(.+?)_/g, "<em>$1</em>") // underline/italic
+      .replace(/~~(.+?)~~/g, "<del>$1</del>") // strikethrough
+      // lists
+      .replace(/^(\d+)\. (.+)$/gm, "<li>$2</li>") // numbered lists
+      .replace(/^- (.+)$/gm, "<li>$1</li>") // bullet lists
+      // links and images
+      .replace(/\[(.+?)\]$$(.+?)$$/g, '<a href="$2">$1</a>') // links
+      .replace(/!\[(.+?)\]$$(.+?)$$/g, '<img src="$2" alt="$1">') // images
+      // code
+      .replace(/`(.+?)`/g, "<code>$1</code>") // inline code
+      .replace(/```([\s\S]+?)```/g, "<pre><code>$1</code></pre>") // code blocks
+      // paragraphs
+      .replace(/\n\n/g, "</p><p>")
+      // line breaks
+      .replace(/\n/g, "<br>");
 
-    // // Wrap in paragraphs if not already
-    // const wrappedHtml = `<p>${html}</p>`
+    // wrap in paragraphs if not already
+    const wrappedHtml = `<p>${html}</p>`;
 
-    // Just set preview content for now
-    setPreviewContent(`<p>$
-    {
-      text.replace(/\n/g, "<br>")
-    }
-    </p>`);
+    setPreviewContent(wrappedHtml);
     setPreviewType("html");
   };
 
   const downloadMarkdown = () => {
-    // First ensure we have markdown content
+    // check for markdown content
     convertToMarkdown();
 
-    // Create a blob and download
+    // create a blob and download
     const blob = new Blob([text], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -155,10 +142,9 @@ export default function FormattingTools({
   const downloadPDF = async () => {
     setIsGenerating(true);
     try {
-      // Convert to HTML first for better formatting
+      // convert to HTML first for better formatting
       convertToHTML();
 
-      // This is commented out as per user request, but UI is preserved
       /*
       // Import libraries dynamically to reduce initial load time
       const [pdfMake, pdfFonts, htmlToPdfmake] = await Promise.all([
@@ -186,10 +172,10 @@ export default function FormattingTools({
       pdfMake.default.createPdf(docDefinition).download("document.pdf");
       */
 
-      // For now, just simulate a delay
+      // just simulate a delay for now
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Create a simple text blob as PDF placeholder
+      // create a simple text blob as PDF placeholder
       const blob = new Blob([text], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");

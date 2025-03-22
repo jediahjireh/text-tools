@@ -9,18 +9,14 @@ import FormattingTools from "@/components/tools/FormattingTools";
 import LanguageTools from "@/components/tools/LanguageTools";
 import RichTextEditor from "@/components/tools/RichTextEditor";
 import StructuralTools from "@/components/tools/StructuralTools";
-import TextArea from "@/components/tools/TextArea";
 import { ThemeToggle } from "@/components/tools/ThemeToggle";
 import TransformationTools from "@/components/tools/TransformationTools";
 import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   const [text, setText] = useState("");
   const [html, setHtml] = useState("");
-  const [useRichEditor, setUseRichEditor] = useState(false);
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-background p-4 sm:p-6 md:p-8">
@@ -34,27 +30,12 @@ export default function Home() {
 
         <Card className="mb-6">
           <CardContent className="p-4 sm:p-6">
-            <div className="mb-4 flex justify-end">
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="editor-mode"
-                  checked={useRichEditor}
-                  onCheckedChange={setUseRichEditor}
-                />
-                <Label htmlFor="editor-mode">Rich Text Editor</Label>
-              </div>
-            </div>
-
-            {useRichEditor ? (
-              <RichTextEditor
-                text={text}
-                setText={setText}
-                html={html}
-                setHtml={setHtml}
-              />
-            ) : (
-              <TextArea text={text} setText={setText} />
-            )}
+            <RichTextEditor
+              text={text}
+              setText={setText}
+              html={html}
+              setHtml={setHtml}
+            />
           </CardContent>
         </Card>
 

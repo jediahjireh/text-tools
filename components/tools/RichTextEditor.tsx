@@ -52,7 +52,19 @@ export default function RichTextEditor({
     setMounted(true);
   }, []);
 
-  // Add to history when html changes
+  // useEffect(() => {
+  //   if (text && (!html || html === "<div></div>" || html === "<p></p>")) {
+  //     // Convert plain text to HTML, preserving whitespace
+  //     const formattedText = text
+  //       .replace(/\n/g, "<br>")
+  //       .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
+  //       .replace(/ {2}/g, "&nbsp;&nbsp;");
+
+  //     setHtml(`<div>${formattedText}</div>`);
+  //   }
+  // }, [text, html, setHtml]);
+
+  // add to history when html changes
   useEffect(() => {
     if (html && html !== history[historyIndex]) {
       setHistory((prev) => [...prev.slice(0, historyIndex + 1), html]);
@@ -60,18 +72,18 @@ export default function RichTextEditor({
     }
   }, [html, history, historyIndex]);
 
-  // Handle content changes from the editor
+  // handle content changes from the editor
   const handleContentChange = (newHtml: string) => {
     setHtml(newHtml);
 
-    // Extract plain text for other tools
+    // extract plain text for other tools
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = newHtml;
     const plainText = tempDiv.textContent || "";
     setText(plainText);
   };
 
-  // Check formatting state based on current selection
+  // check formatting state based on current selection
   const checkFormatting = () => {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;
@@ -100,7 +112,7 @@ export default function RichTextEditor({
     });
   };
 
-  // Helper function to find parent element
+  // helper function to find parent element
   const findParentElement = (node: Node | null): HTMLElement | null => {
     if (!node) return null;
     if (node.nodeType === Node.TEXT_NODE) {
@@ -109,7 +121,7 @@ export default function RichTextEditor({
     return node as HTMLElement;
   };
 
-  // Helper function to determine heading level
+  // helper function to determine heading level
   const getHeadingLevel = (element: HTMLElement | null): number => {
     if (!element) return 0;
 
@@ -120,7 +132,7 @@ export default function RichTextEditor({
       if (tagName === "h2") return 2;
       if (tagName === "h3") return 3;
 
-      // Don't traverse beyond the editor
+      // don't traverse beyond the editor
       if (current === editorRef.current) break;
 
       current = current.parentElement as HTMLElement;
@@ -129,7 +141,7 @@ export default function RichTextEditor({
     return 0;
   };
 
-  // Helper function to check if in a list
+  // helper function to check if in a list
   const isInList = (element: HTMLElement | null): string => {
     if (!element) return "";
 
@@ -154,20 +166,20 @@ export default function RichTextEditor({
     return "";
   };
 
-  // Apply formatting command
+  // apply formatting command
   const handleFormat = (command: string, value = "") => {
     if (!editorRef.current) return;
 
-    // Focus the editor first
+    // focus the editor first
     editorRef.current.focus();
 
-    // Save selection
+    // save selection
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;
 
     const range = selection.getRangeAt(0);
 
-    // Handle special cases
+    // handle special cases
     switch (command) {
       case "heading":
         applyHeading(Number.parseInt(value));
@@ -194,14 +206,14 @@ export default function RichTextEditor({
         document.execCommand(command, false, value);
     }
 
-    // Update content and check formatting
+    // update content and check formatting
     if (editorRef.current) {
       handleContentChange(editorRef.current.innerHTML);
       checkFormatting();
     }
   };
 
-  // Add this new function to toggle format blocks like pre (code)
+  // add this new function to toggle format blocks like pre (code)
   const toggleFormatBlock = (blockType: string) => {
     if (!editorRef.current) return;
 
@@ -211,7 +223,7 @@ export default function RichTextEditor({
     const range = selection.getRangeAt(0);
     const parentElement = findParentElement(range.commonAncestorContainer);
 
-    // Check if we're already in this block type
+    // check if we're already in this block type
     let inBlock = false;
     let current = parentElement;
 
@@ -224,19 +236,19 @@ export default function RichTextEditor({
     }
 
     if (inBlock) {
-      // Remove the block formatting
+      // remove the block formatting
       document.execCommand("formatBlock", false, "<p>");
     } else {
-      // Apply the block formatting
+      // apply the block formatting
       document.execCommand("formatBlock", false, `<${blockType}>`);
     }
   };
 
-  // Apply heading formatting
+  // apply heading formatting
   const applyHeading = (level: number) => {
     if (!editorRef.current) return;
 
-    // Focus the editor
+    // focus the editor
     editorRef.current.focus();
 
     const selection = window.getSelection();
@@ -244,27 +256,27 @@ export default function RichTextEditor({
 
     const range = selection.getRangeAt(0);
 
-    // Get the current heading level
+    // get the current heading level
     const currentHeadingLevel = getHeadingLevel(
       findParentElement(range.commonAncestorContainer),
     );
 
-    // If we're already at this heading level, remove it (convert to paragraph)
+    // if already at this heading level, remove it (convert to paragraph)
     if (currentHeadingLevel === level) {
       document.execCommand("formatBlock", false, "<p>");
     } else {
-      // Apply the heading
+      // apply the heading
       document.execCommand("formatBlock", false, `<h${level}>`);
     }
 
-    // Update content and check formatting
+    // update content and check formatting
     if (editorRef.current) {
       handleContentChange(editorRef.current.innerHTML);
       checkFormatting();
     }
   };
 
-  // Toggle blockquote
+  // toggle blockquote
   const toggleBlockquote = () => {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;
@@ -272,7 +284,7 @@ export default function RichTextEditor({
     const range = selection.getRangeAt(0);
     const parentElement = findParentElement(range.commonAncestorContainer);
 
-    // Check if we're already in a blockquote
+    // check if we're already in a blockquote
     let inBlockquote = false;
     let current = parentElement;
 
@@ -285,19 +297,19 @@ export default function RichTextEditor({
     }
 
     if (inBlockquote) {
-      // Remove blockquote
+      // remove blockquote
       document.execCommand("formatBlock", false, "p");
     } else {
-      // Apply blockquote
+      // apply blockquote
       document.execCommand("formatBlock", false, "blockquote");
     }
   };
 
-  // Toggle list (ordered or unordered)
+  // toggle list (ordered or unordered)
   const toggleList = (listType: "ul" | "ol") => {
     if (!editorRef.current) return;
 
-    // Focus the editor
+    // focus the editor
     editorRef.current.focus();
 
     const selection = window.getSelection();
@@ -306,7 +318,7 @@ export default function RichTextEditor({
     const range = selection.getRangeAt(0);
     const parentElement = findParentElement(range.commonAncestorContainer);
 
-    // Check if we're already in this type of list
+    // check if we're already in this type of list
     const currentListType = isInList(parentElement);
     const command =
       listType === "ul" ? "insertUnorderedList" : "insertOrderedList";
@@ -315,10 +327,10 @@ export default function RichTextEditor({
       (listType === "ul" && currentListType === "unordered") ||
       (listType === "ol" && currentListType === "ordered")
     ) {
-      // We're already in this type of list, so remove it
+      // we're already in this type of list, so remove it
       document.execCommand(command, false);
     } else {
-      // If we're in a different type of list, first remove that list
+      // if we're in a different type of list, first remove that list
       if (
         currentListType === "unordered" ||
         currentListType === "ordered" ||
@@ -331,18 +343,18 @@ export default function RichTextEditor({
         document.execCommand(removeCommand, false);
       }
 
-      // Now apply the new list type
+      // now apply the new list type
       document.execCommand(command, false);
     }
 
-    // Update content and check formatting
+    // update content and check formatting
     if (editorRef.current) {
       handleContentChange(editorRef.current.innerHTML);
       checkFormatting();
     }
   };
 
-  // Toggle checklist
+  // toggle checklist
   const toggleChecklist = () => {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;
@@ -350,18 +362,18 @@ export default function RichTextEditor({
     const range = selection.getRangeAt(0);
     const parentElement = findParentElement(range.commonAncestorContainer);
 
-    // Check if we're already in a checklist
+    // check if we're already in a checklist
     const listType = isInList(parentElement);
 
     if (listType === "checklist") {
-      // Remove checklist
+      // remove checklist
       let current = parentElement;
       while (current && current !== editorRef.current) {
         if (
           current.tagName?.toLowerCase() === "ul" &&
           current.classList.contains("checklist")
         ) {
-          // Convert to paragraph
+          // convert to paragraph
           const items = current.querySelectorAll("li");
           const fragment = document.createDocumentFragment();
 
@@ -377,11 +389,11 @@ export default function RichTextEditor({
         current = current.parentElement as HTMLElement;
       }
     } else {
-      // Create checklist from selection
+      // create checklist from selection
       const selectedText = selection.toString();
 
       if (selectedText) {
-        // If already in a list, convert it
+        // convert it if already in a list
         if (listType === "unordered" || listType === "ordered") {
           let current = parentElement;
           while (current && current !== editorRef.current) {
@@ -405,7 +417,7 @@ export default function RichTextEditor({
             current = current.parentElement as HTMLElement;
           }
         } else {
-          // Create new checklist
+          // create new checklist
           const lines = selectedText.split("\n");
           let html = '<ul class="checklist">';
 
@@ -445,11 +457,13 @@ export default function RichTextEditor({
     }
   };
 
+  // copy formatted content
   const handleCopy = () => {
-    if (mounted) {
-      navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+    if (html) {
+      navigator.clipboard.writeText(html).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      });
     }
   };
 
@@ -468,7 +482,7 @@ export default function RichTextEditor({
     );
   }
 
-  // Update the LinkDialog onInsert handler
+  // update link dialog on insert handler
   const handleLinkInsert = (url: string, linkText: string) => {
     if (!editorRef.current) return;
 
@@ -512,18 +526,18 @@ export default function RichTextEditor({
       }
     }
 
-    // Update content and check formatting
+    // update content and check formatting
     handleContentChange(editorRef.current.innerHTML);
     checkFormatting();
   };
 
-  // Update the ImageDialog onInsert handler
+  // update the ImageDialog onInsert handler
   const handleImageInsert = (url: string, alt: string) => {
     if (!editorRef.current) return;
 
     editorRef.current.focus();
 
-    // Create image with caption if alt text is provided
+    // create image with caption if alt text is provided
     let imageHtml = "";
     if (alt) {
       imageHtml = `
@@ -544,30 +558,30 @@ export default function RichTextEditor({
 
     document.execCommand("insertHTML", false, imageHtml);
 
-    // Update content
+    // update content
     handleContentChange(editorRef.current.innerHTML);
   };
 
-  // Update the TableDialog onInsert handler
+  // update the table dialog on insert handler
   const handleTableInsert = (rows: number, cols: number) => {
     if (!editorRef.current) return;
 
     editorRef.current.focus();
 
-    // Generate table HTML with editable cells
+    // generate table HTML with editable cells
     let tableHtml = `
       <div class="table-container" style="margin: 1em 0; overflow-x: auto;">
         <table border="1" style="width:100%; border-collapse: collapse; border: 1px solid #ddd;">
     `;
 
-    // Add header row
+    // add header row
     tableHtml += "<thead><tr>";
     for (let j = 0; j < cols; j++) {
       tableHtml += `<th style="padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">Header ${j + 1}</th>`;
     }
     tableHtml += "</tr></thead><tbody>";
 
-    // Add data rows
+    // add data rows
     for (let i = 1; i < rows; i++) {
       tableHtml += "<tr>";
       for (let j = 0; j < cols; j++) {
@@ -579,7 +593,7 @@ export default function RichTextEditor({
 
     document.execCommand("insertHTML", false, tableHtml);
 
-    // Update content
+    // update content
     handleContentChange(editorRef.current.innerHTML);
   };
 
